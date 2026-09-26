@@ -1,12 +1,13 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 import { Activity, Bell, Bike, ChevronDown, ChevronLeft, Flag, Footprints, LockKeyhole, Menu, Plus, Settings2, Smartphone, Waves, UsersRound, Watch } from 'lucide-react'
 
 const orange = '#FC5200'
 
 function FooRunMark() {
-  return <div className="flex items-center gap-2 text-xl font-black tracking-[-0.08em]"><span className="text-[#fc5200]">✦</span><span><b className="text-[#fc5200]">Foo</b>Run</span></div>
+  return <Link href="/" aria-label="بازگشت به صفحه اصلی FooRun" className="flex items-center gap-2 text-xl font-black tracking-[-0.08em] transition-opacity hover:opacity-75"><span className="text-[#fc5200]">✦</span><span><b className="text-[#fc5200]">Foo</b>Run</span></Link>
 }
 
 function Header() {
