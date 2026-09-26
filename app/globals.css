@@ -159,7 +159,11 @@
 }
 
 html { scroll-behavior: smooth; }
-body { background: #0B0F17; font-family: 'Vazirmatn', Tahoma, sans-serif; }
+:root { --foorun-canvas: #080B10; --foorun-orange: #FF4D00; --foorun-lime: #00F59B; --foorun-cyan: #00D2FF; }
+body { background: var(--foorun-canvas); font-family: 'Vazirmatn', Tahoma, sans-serif; }
+button, a, select { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible, select:focus-visible { outline: 2px solid #00D2FF; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
 
 @layer base {
   * {

@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import FooRunFooter from '@/components/Footer'
+import ScrollProgress from '@/components/scroll-progress'
 
 export const metadata: Metadata = {
   title: 'FooRun | جامعه دوندگان ایران',
@@ -42,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className="antialiased">
+        <ScrollProgress />
         {children}
         <FooRunFooter />
         {process.env.NODE_ENV === 'production' && <Analytics />}
