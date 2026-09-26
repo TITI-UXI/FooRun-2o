@@ -17,7 +17,7 @@ function Header() {
       <div className="hidden h-full items-center gap-7 text-sm text-[#5d5d64] md:flex">
         <a className="flex h-full items-center gap-2 border-b-2 border-[#fc5200] font-semibold text-[#17171a]" href="/dashboard">Dashboard <ChevronDown size={15} /></a>
         <a href="#training" className="flex items-center gap-2">Training <ChevronDown size={15} /></a>
-        <a href="#maps">Maps</a><a href="#challenges">Challenges</a>
+        <a href="#maps">Maps</a><Link href="/challenges">Challenges</Link>
       </div>
       <div className="mr-auto flex items-center gap-4">
         <button className="hidden rounded border border-[#d9d9dd] px-4 py-2 text-sm font-semibold md:block">🎁 Give a Gift</button>
