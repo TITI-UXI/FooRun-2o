@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Activity, Bell, Bike, ChevronDown, ChevronLeft, Flag, Footprints, LockKeyhole, Menu, Plus, Settings2, Smartphone, Waves, UsersRound, Watch } from 'lucide-react'
-import FooRunFooter from '@/components/foorun-footer'
 
 const orange = '#FC5200'
 
@@ -65,7 +64,7 @@ function Community() {
 }
 
 export default function FooRunDashboard() {
-  return <div dir="ltr" className="min-h-screen bg-[#f7f7f8] text-[#17171a]"><Header /><main className="mx-auto grid max-w-[1280px] grid-cols-1 gap-7 px-5 py-16 lg:grid-cols-[280px_minmax(0,592px)_280px] lg:items-start"><ProfileSidebar /><div><Checklist /><AppBanner /></div><Community /></main><FooRunFooter /></div>
+  return <div dir="ltr" className="min-h-screen bg-[#f7f7f8] text-[#17171a]"><Header /><main className="mx-auto grid max-w-[1280px] grid-cols-1 gap-7 px-5 py-16 lg:grid-cols-[280px_minmax(0,592px)_280px] lg:items-start"><ProfileSidebar /><div><Checklist /><AppBanner /></div><Community /></main></div>
 }
 
 export { Activity }
