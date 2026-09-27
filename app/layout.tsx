@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import FooRunFooter from '@/components/Footer'
 import ScrollProgress from '@/components/scroll-progress'
+import { LanguageAndThemeProvider } from '@/components/language-theme-context'
 
 export const metadata: Metadata = {
   title: 'FooRun | جامعه دوندگان ایران',
@@ -44,8 +45,10 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <body className="antialiased">
         <ScrollProgress />
-        {children}
-        <FooRunFooter />
+        <LanguageAndThemeProvider>
+          {children}
+          <FooRunFooter />
+        </LanguageAndThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

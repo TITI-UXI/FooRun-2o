@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Activity, Bell, Bike, ChevronDown, ChevronLeft, Flag, Footprints, LockKeyhole, Menu, Plus, Settings2, Smartphone, Waves, UsersRound, Watch } from 'lucide-react'
+import { Activity, Bell, Bike, ChevronDown, ChevronLeft, Flag, Footprints, LockKeyhole, Menu, Moon, Plus, Settings2, Smartphone, Sun, Waves, UsersRound, Watch } from 'lucide-react'
+import { useLanguageAndTheme } from '@/components/language-theme-context'
 import { SpotlightCard } from '@/components/foorun-interactions'
 
 const orange = '#FC5200'
@@ -54,7 +55,9 @@ function NavDropdown({ label }: { label: keyof typeof navMenus }) {
 }
 
 function Header() {
-  return <header className="sticky top-0 z-30 border-b border-[#e6e6e8] bg-white">
+  const { language, theme, toggleTheme } = useLanguageAndTheme()
+  const isPersian = language === 'fa'
+  return <header className="sticky top-0 z-30 border-b border-[#e6e6e8] bg-white dark:border-[#34353a] dark:bg-[#17181c]">
     <div className="mx-auto flex h-[72px] max-w-[1280px] items-center gap-8 px-5">
       <FooRunMark />
       <div className="hidden h-full items-center gap-7 text-sm md:flex">
@@ -65,6 +68,7 @@ function Header() {
       <div className="mr-auto flex items-center gap-4">
         <button className="hidden rounded border border-[#d9d9dd] px-4 py-2 text-sm font-semibold md:block">Give a Gift</button>
         <button className="rounded bg-[#fc5200] px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#e74b00]">Start Trial</button>
+        <button type="button" onClick={toggleTheme} aria-label={theme === 'light' ? (isPersian ? 'حالت تاریک' : 'Dark mode') : (isPersian ? 'حالت روشن' : 'Light mode')} className="rounded-full p-2 text-[#666] transition hover:bg-[#f4f4f6] dark:text-[#d5d5d8] dark:hover:bg-[#33343a]"><Sun size={18} className="hidden dark:block" /><Moon size={18} className="dark:hidden" /></button>
         <button aria-label="Notifications" className="hidden rounded-full p-2 text-[#666] hover:bg-[#f4f4f6] sm:block"><Bell size={21} /></button>
         <button aria-label="Account menu" className="flex items-center gap-2"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f57413] text-lg text-white">Z</span><ChevronDown size={15} /></button>
         <button aria-label="Add activity" className="text-[#fc5200]"><Plus size={27} strokeWidth={1.8} /></button>
