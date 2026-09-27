@@ -54,7 +54,7 @@ function NavDropdown({ label }: { label: keyof typeof navMenus }) {
   </div>
 }
 
-function Header() {
+export function Header() {
   const { language, theme, toggleTheme } = useLanguageAndTheme()
   const isPersian = language === 'fa'
   return <header className="sticky top-0 z-30 border-b border-[#e6e6e8] bg-white dark:border-[#34353a] dark:bg-[#17181c]">
