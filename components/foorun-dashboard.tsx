@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Activity, Bell, Bike, ChevronDown, ChevronLeft, Flag, Footprints, LockKeyhole, Menu, Plus, Settings2, Smartphone, Waves, UsersRound, Watch } from 'lucide-react'
 import { SpotlightCard } from '@/components/foorun-interactions'
 
@@ -11,17 +12,58 @@ function FooRunMark() {
   return <Link href="/" aria-label="بازگشت به صفحه اصلی FooRun" className="flex items-center gap-2 text-xl font-black tracking-[-0.08em] transition-opacity hover:opacity-75"><span className="text-[#fc5200]">✦</span><span><b className="text-[#fc5200]">Foo</b>Run</span></Link>
 }
 
+const navMenus = {
+  Dashboard: [
+    { label: 'Activity Feed', href: '/dashboard/feed' },
+    { label: 'Clubs', href: '/clubs' },
+    { label: 'My Segments', href: '/segments' },
+    { label: 'My Routes', href: '/routes' },
+    { label: 'My Goals', href: '/goals', section: 'SUBSCRIPTION' },
+  ],
+  Training: [
+    { label: 'Training Calendar', href: '/training/calendar' },
+    { label: 'My Activities', href: '/training/activities' },
+    { label: 'Training Log', href: '/training/log', section: 'SUBSCRIPTION' },
+    { label: 'Training Plans', href: '/training/plans' },
+    { label: 'Power Curve', href: '/training/power-curve' },
+    { label: 'Fitness & Freshness', href: '/training/fitness' },
+  ],
+} as const
+
+function NavDropdown({ label }: { label: keyof typeof navMenus }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const close = (event: MouseEvent) => { if (ref.current && !ref.current.contains(event.target as Node)) setOpen(false) }
+    document.addEventListener('mousedown', close)
+    return () => document.removeEventListener('mousedown', close)
+  }, [])
+  return <div ref={ref} className="relative h-full" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+    <button type="button" aria-expanded={open} onClick={() => setOpen((value) => !value)} className={`flex h-full items-center gap-2 border-b-2 px-1 text-sm transition-colors ${open ? 'border-[#fc5200] font-semibold text-[#17171a]' : 'border-transparent text-[#5d5d64] hover:text-[#17171a]'}`}>
+      {label}<ChevronDown size={15} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
+    </button>
+    <AnimatePresence>
+      {open && <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.16, ease: 'easeOut' }} className="absolute left-[-1rem] top-[72px] z-50 w-[208px] overflow-hidden border border-[#dedee2] bg-white shadow-[0_5px_16px_rgba(0,0,0,.12)]">
+        {navMenus[label].map((item) => <div key={item.href}>
+          {'section' in item && item.section && <div className="border-t border-[#e8e8eb] bg-[#f7f7f9] px-4 pb-1 pt-3 text-[9px] font-medium tracking-[.02em] text-[#303036]">{item.section}</div>}
+          <Link href={item.href} onClick={() => setOpen(false)} className="flex min-h-[45px] items-center px-4 text-sm text-[#2a2a2f] transition-colors hover:bg-[#f5f5f7] hover:text-[#fc5200]">{item.label}</Link>
+        </div>)}
+      </motion.div>}
+    </AnimatePresence>
+  </div>
+}
+
 function Header() {
   return <header className="sticky top-0 z-30 border-b border-[#e6e6e8] bg-white">
     <div className="mx-auto flex h-[72px] max-w-[1280px] items-center gap-8 px-5">
       <FooRunMark />
-      <div className="hidden h-full items-center gap-7 text-sm text-[#5d5d64] md:flex">
-        <a className="flex h-full items-center gap-2 border-b-2 border-[#fc5200] font-semibold text-[#17171a]" href="/dashboard">Dashboard <ChevronDown size={15} /></a>
-        <a href="#training" className="flex items-center gap-2">Training <ChevronDown size={15} /></a>
-        <a href="#maps">Maps</a><Link href="/challenges">Challenges</Link>
+      <div className="hidden h-full items-center gap-7 text-sm md:flex">
+        <NavDropdown label="Dashboard" />
+        <NavDropdown label="Training" />
+        <Link href="/maps" className="flex h-full items-center text-[#5d5d64] hover:text-[#17171a]">Maps</Link><Link href="/challenges" className="flex h-full items-center text-[#5d5d64] hover:text-[#17171a]">Challenges</Link>
       </div>
       <div className="mr-auto flex items-center gap-4">
-        <button className="hidden rounded border border-[#d9d9dd] px-4 py-2 text-sm font-semibold md:block">🎁 Give a Gift</button>
+        <button className="hidden rounded border border-[#d9d9dd] px-4 py-2 text-sm font-semibold md:block">Give a Gift</button>
         <button className="rounded bg-[#fc5200] px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#e74b00]">Start Trial</button>
         <button aria-label="Notifications" className="hidden rounded-full p-2 text-[#666] hover:bg-[#f4f4f6] sm:block"><Bell size={21} /></button>
         <button aria-label="Account menu" className="flex items-center gap-2"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f57413] text-lg text-white">Z</span><ChevronDown size={15} /></button>
