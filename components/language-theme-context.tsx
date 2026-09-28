@@ -51,5 +51,7 @@ export function useLanguageAndTheme() {
   return context
 }
 
+export const useAppContext = useLanguageAndTheme
+
 export type { Language, Theme }
 export { LanguageAndThemeContext }
